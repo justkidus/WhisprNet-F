@@ -1,0 +1,182 @@
+import React, { useEffect } from 'react';
+import './App.css';
+import Navbar from './components/Navbar';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
+// import SettingPage from './pages/theme.page';
+import { useThemeStore } from './store/useThemestore';
+import WelcomePage from './pages/welcome.page';
+import Login from './pages/login.page';
+import Signup from './pages/signup.page';
+import { Toaster } from 'react-hot-toast';
+import { useAuthStore } from './store/useAuthstore';
+import { Loader } from 'lucide-react';
+import Setting from './pages/setting.page';
+import Dashboard from './pages/dash.board';
+import { SidebarProvider } from './components/ui/sidebar';
+// import SidebarDemo from './pages/dash.board';
+// import Setting from './pages/setting.page';
+import Layout from './pages/dash/layout';
+import Layout2 from './pages/dash/layout2';
+import LogoutPage from './pages/logout';
+import Allchats from './pages/allchat';
+import Users from './pages/users';
+import Layout3 from './pages/dash/layout3';
+import { useChatstore } from './store/useChatstore';
+import { ChatArea, NoChatSelected } from './components/chat/chatArea';
+import Page from './dashboard/page';
+function App() {
+	const { selectedUser } = useChatstore();
+	const location = useLocation();
+	const { theme } = useThemeStore();
+	const { checkAuth, authUser, isCheckingAuth,onlineUsers } = useAuthStore();
+
+	const hideNavbarRoutes = ['/', '/allchats', '/users', '/allchats/:id'];
+	const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
+
+	console.log({onlineUsers})
+	useEffect(() => {
+		checkAuth();
+	}, [checkAuth]);
+
+	if (isCheckingAuth && !authUser) {
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<Loader className="size-10 animate-spin" />
+			</div>
+		);
+	}
+	console.log('this authuser', authUser);
+	return (
+		<div
+			data-theme={theme}
+			className="min-h-screen max-h-screen overflow-y-hidden"
+		>
+			{!shouldHideNavbar && <Navbar />}
+
+			<div className="">
+				<Routes>
+					<Route
+						path="/welcome"
+						element={
+							!authUser ? (
+								<WelcomePage />
+							) : (
+								// <Layout>
+								// 	<Layout2>{/* <Dashboard /> */}</Layout2>
+								// </Layout>
+								<Page />
+							)
+						}
+					/>
+					<Route path="/setting" element={<Setting />} />
+					<Route path="/welcome/login" element={<Login />} />
+					<Route
+						path="/welcome/signup"
+						element={
+							<div className="" data-theme={theme}>
+								<Signup />
+							</div>
+						}
+					/>
+					<Route
+						path="/"
+						element={
+							authUser ? (
+								<div
+									className="bg-base-100 text-base-content rounded-lg"
+									data-theme={theme}
+								>
+									<Page />
+								</div>
+							) : (
+								<Navigate to="/welcome" />
+							)
+						}
+					/>
+					<Route
+						path="/allchats"
+						element={
+							authUser ? (
+								<div
+									className="bg-base-100 text-base-content rounded-lg"
+									data-theme={theme}
+								>
+									{/* <Layout>
+										<Layout2>
+											<Allchats />
+										</Layout2>
+									</Layout> */}
+									<Page />
+								</div>
+							) : (
+								<Navigate to="/welcome/login" />
+							)
+						}
+					/>
+					<Route
+						path="/users"
+						element={
+							authUser ? (
+								<div
+									className="bg-base-100 text-base-content rounded-lg"
+									data-theme={theme}
+								>
+									{/* <Layout>
+										<Layout2>
+											<ChatArea />
+										</Layout2>
+									</Layout> */}
+									<Page />
+								</div>
+							) : (
+								<Navigate to="/welcome/login" />
+							)
+						}
+					/>
+					{/* <Route
+						path="/allchats/:id"
+						element={
+							authUser ? (
+								<div className="...">
+									<div className="flex h-full">
+										<div className="flex-1">
+											{selectedUser ? <ChatArea /> : <NoChatSelected />}
+										</div>
+									</div>{' '}
+								</div>
+							) : (
+								<Navigate to="/welcome/login" />
+							)
+						}
+					/> */}
+					{/* 
+					<Route
+						path="/allchats/:id"
+						element={
+							authUser ? (
+								<div
+									className="bg-base-100 text-base-content rounded-lg p-4"
+									data-theme={theme}
+								>
+									<Layout>
+										<Layout2>
+											<Layout3>
+												<ChatArea />
+											</Layout3>
+										</Layout2>
+									</Layout>
+								</div>
+							) : (
+								<Navigate to="/login" />
+							)
+						}
+					/> */}
+					<Route path="/logout" element={<LogoutPage />} />
+				</Routes>
+			</div>
+			<Toaster />
+		</div>
+	);
+}
+
+export default App;
