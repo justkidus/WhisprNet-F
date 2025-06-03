@@ -11,29 +11,20 @@ import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './store/useAuthstore';
 import { Loader } from 'lucide-react';
 import Setting from './pages/setting.page';
-import Dashboard from './pages/dash.board';
-import { SidebarProvider } from './components/ui/sidebar';
 // import SidebarDemo from './pages/dash.board';
 // import Setting from './pages/setting.page';
-import Layout from './pages/dash/layout';
-import Layout2 from './pages/dash/layout2';
-import LogoutPage from './pages/logout';
-import Allchats from './pages/allchat';
-import Users from './pages/users';
-import Layout3 from './pages/dash/layout3';
 import { useChatstore } from './store/useChatstore';
-import { ChatArea, NoChatSelected } from './components/chat/chatArea';
 import Page from './dashboard/page';
 function App() {
 	const { selectedUser } = useChatstore();
 	const location = useLocation();
 	const { theme } = useThemeStore();
-	const { checkAuth, authUser, isCheckingAuth,onlineUsers } = useAuthStore();
+	const { checkAuth, authUser, isCheckingAuth, onlineUsers } = useAuthStore();
 
 	const hideNavbarRoutes = ['/', '/allchats', '/users', '/allchats/:id'];
 	const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
-	console.log({onlineUsers})
+	console.log({ onlineUsers });
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth]);
@@ -57,16 +48,7 @@ function App() {
 				<Routes>
 					<Route
 						path="/welcome"
-						element={
-							!authUser ? (
-								<WelcomePage />
-							) : (
-								// <Layout>
-								// 	<Layout2>{/* <Dashboard /> */}</Layout2>
-								// </Layout>
-								<Page />
-							)
-						}
+						element={!authUser ? <WelcomePage /> : <Page />}
 					/>
 					<Route path="/setting" element={<Setting />} />
 					<Route path="/welcome/login" element={<Login />} />
@@ -101,11 +83,6 @@ function App() {
 									className="bg-base-100 text-base-content rounded-lg"
 									data-theme={theme}
 								>
-									{/* <Layout>
-										<Layout2>
-											<Allchats />
-										</Layout2>
-									</Layout> */}
 									<Page />
 								</div>
 							) : (
@@ -121,11 +98,6 @@ function App() {
 									className="bg-base-100 text-base-content rounded-lg"
 									data-theme={theme}
 								>
-									{/* <Layout>
-										<Layout2>
-											<ChatArea />
-										</Layout2>
-									</Layout> */}
 									<Page />
 								</div>
 							) : (
