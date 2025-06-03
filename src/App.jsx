@@ -14,6 +14,7 @@ import Setting from './pages/setting.page';
 // import SidebarDemo from './pages/dash.board';
 // import Setting from './pages/setting.page';
 import { useChatstore } from './store/useChatstore';
+import LogoutPage from './pages/logout';
 import Page from './dashboard/page';
 function App() {
 	const { selectedUser } = useChatstore();
