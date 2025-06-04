@@ -3,7 +3,7 @@ import axiosInstance from '@/lib/axios';
 import toast from 'react-hot-toast';
 import { io } from 'socket.io-client';
 // const BASE_URL = 'http://localhost:8001';
-const BASE_URL = 'https://whisprnet-b.onrender.com/api';
+const BASE_URL = 'https://whisprnet-b.onrender.com';
 export const useAuthStore = create((set, get) => ({
 	authUser: null,
 	isSigningUp: false,
