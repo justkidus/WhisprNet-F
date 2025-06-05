@@ -27,11 +27,12 @@ import react from '../assets/react.svg';
 import { useNavigate } from 'react-router-dom';
 // This is sample data
 import Page from '@/dashboard/page';
+import avatar from '@/assets/vite.svg';
 const data = {
 	user: {
 		name: 'shadcn',
 		email: 'm@example.com',
-		avatar: '/avatars/shadcn.jpg',
+		avatar: avatar,
 	},
 	navMain: [
 		{

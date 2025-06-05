@@ -61,7 +61,7 @@ export const useAuthStore = create((set, get) => ({
 		} catch (error) {
 			toast.error(error.response.data.msg);
 		} finally {
-			set({ isLoggingin: false });
+			set({ isLoggingIn: false });
 		}
 	},
 	updateProfile: async (data) => {
