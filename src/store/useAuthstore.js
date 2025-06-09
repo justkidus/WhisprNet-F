@@ -2,8 +2,8 @@ import { create } from 'zustand';
 import axiosInstance from '@/lib/axios';
 import toast from 'react-hot-toast';
 import { io } from 'socket.io-client';
-// const BASE_URL = 'http://localhost:8001';
-const BASE_URL = 'https://whisprnet-b.onrender.com';
+const BASE_URL = 'http://localhost:8001';
+// const BASE_URL = 'https://whisprnet-b.onrender.com';
 export const useAuthStore = create((set, get) => ({
 	authUser: null,
 	isSigningUp: false,
@@ -44,7 +44,7 @@ export const useAuthStore = create((set, get) => ({
 			await axiosInstance.post('/users/logout');
 			set({ authUser: null });
 			toast.success('loggedout successfully');
-			// get().disconnectSocket();
+			get().disconnectSocket();
 		} catch (error) {
 			toast.error(error.response.data.msg);
 		} finally {

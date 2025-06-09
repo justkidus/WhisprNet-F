@@ -1,5 +1,5 @@
 ('use client');
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Label } from '../components/ui/label';
 import { Input0 } from '../components/ui/input0';
 import { cn } from '../lib/utilis3';
@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import { useAuthStore } from '@/store/useAuthstore';
 import { Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
+
 const Signup = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [formData, setFormData] = useState({
@@ -15,7 +17,8 @@ const Signup = () => {
 		email: '',
 		password: '',
 	});
-	const { signUp, isSigningUp } = useAuthStore();
+	const { signUp, isSigningUp, authUser } = useAuthStore();
+
 	const validateForm = () => {
 		if (!formData.fullName.trim()) return toast.error('Full name is required');
 		if (!formData.email.trim()) return toast.error('Email is required');
@@ -33,8 +36,13 @@ const Signup = () => {
 		if (success === true) signUp(formData);
 		console.log('Form submitted');
 	};
-	const { authUser } = useAuthStore();
+	// const { authUser } = useAuthStore();
 	const nav = useNavigate();
+	useEffect(() => {
+		if (authUser) {
+			nav('/');
+		}
+	}, [authUser, nav]);
 	return (
 		<div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
 			<h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
@@ -72,15 +80,29 @@ const Signup = () => {
 				</LabelInputContainer>
 				<LabelInputContainer className="mb-4">
 					<Label htmlFor="password">Password</Label>
-					<Input0
-						id="password"
-						placeholder="••••••••"
-						type="password"
-						value={formData.password}
-						onChange={(e) =>
-							setFormData({ ...formData, password: e.target.value })
-						}
-					/>
+					<div className="relative">
+						<Input0
+							id="password"
+							placeholder="••••••••"
+							type={showPassword ? 'text' : 'password'}
+							value={formData.password}
+							onChange={(e) =>
+								setFormData({ ...formData, password: e.target.value })
+							}
+							className="pr-10"
+						/>
+						<button
+							type="button"
+							className="absolute right-2 top-1/2 -translate-y-1/2 text-base-content/40"
+							onClick={() => setShowPassword(!showPassword)}
+						>
+							{showPassword ? (
+								<EyeOff className="size-5" />
+							) : (
+								<Eye className="size-5" />
+							)}
+						</button>
+					</div>
 				</LabelInputContainer>
 				<button
 					className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
@@ -91,13 +113,8 @@ const Signup = () => {
 							<div className="flex justify-center gap-[20px]">
 								<Loader2 className="size-5 animate-spin" />
 								<span>Loading</span>
-								{authUser ? (
-									<>{nav('/')}</>
-								) : (
-									<>
-										<h1>their is a problem , Try Again</h1>
-									</>
-								)}
+								authUser
+								<>{nav('/')}</>
 							</div>
 						</>
 					) : (

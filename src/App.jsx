@@ -53,6 +53,14 @@ function App() {
 					/>
 					<Route path="/setting" element={<Setting />} />
 					<Route path="/welcome/login" element={<Login />} />
+					{/* <Route
+						path="/welcome/signup"
+						element={
+							<div className="" data-theme={theme}>
+								<Signup />
+							</div>
+						}
+					/> */}
 					<Route
 						path="/welcome/signup"
 						element={
@@ -61,6 +69,7 @@ function App() {
 							</div>
 						}
 					/>
+
 					<Route
 						path="/"
 						element={
@@ -72,7 +81,7 @@ function App() {
 									<Page />
 								</div>
 							) : (
-								<Navigate to="/welcome" />
+								<Navigate to="/welcome/signup" />
 							)
 						}
 					/>
