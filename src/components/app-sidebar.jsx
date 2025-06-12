@@ -181,7 +181,7 @@ export function AppSidebar({ ...props }) {
 	console.log(selectedUser);
 	if (isMobile) {
 		return (
-			<div className="p-4 w-full h-full">
+			<div className="p-4 w-full h-full bg-white">
 				<h2 className="text-lg font-semibold mb-4">Chats</h2>
 				<div className="overflow-y-auto max-h-screen">
 					{users.map((user) => (
@@ -197,7 +197,7 @@ export function AppSidebar({ ...props }) {
 									className="w-10 h-10 rounded-full"
 								/>
 								{onLineUsers.includes(user._id) && (
-									<div className="absolute bottom-0 right-0 w-3 h-3 bg-white rounded-full border-2 border-white" />
+									<div className="absolute bottom-0 right-0 w-3 h-3 bg-black rounded-full border-2 border-white" />
 								)}
 							</div>
 							<div>{user.fullName}</div>

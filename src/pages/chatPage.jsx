@@ -30,7 +30,7 @@ const ChatPage = () => {
 	}
 
 	return (
-		<div className="flex flex-col h-screen w-screen">
+		<div className="flex flex-col h-screen w-screen bg-white">
 			<header className="sticky top-0 flex items-center gap-2 border-b bg-background p-4 h-[50px] w-full">
 				<button
 					onClick={() => navigate(-1)}
