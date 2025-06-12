@@ -16,6 +16,7 @@ import Setting from './pages/setting.page';
 import { useChatstore } from './store/useChatstore';
 import LogoutPage from './pages/logout';
 import Page from './dashboard/page';
+import ChatPage from './pages/chatPage';
 function App() {
 	const { selectedUser } = useChatstore();
 	const location = useLocation();
@@ -61,6 +62,21 @@ function App() {
 							</div>
 						}
 					/> */}
+					<Route
+						path="/chat/:userId"
+						element={
+							authUser ? (
+								<div
+									className="bg-base-100 text-base-content rounded-lg"
+									data-theme={theme}
+								>
+									<ChatPage />
+								</div>
+							) : (
+								<Navigate to="/welcome/login" />
+							)
+						}
+					/>
 					<Route
 						path="/welcome/signup"
 						element={
@@ -115,22 +131,18 @@ function App() {
 							)
 						}
 					/>
-					{/* <Route
+					<Route
 						path="/allchats/:id"
 						element={
 							authUser ? (
-								<div className="...">
-									<div className="flex h-full">
-										<div className="flex-1">
-											{selectedUser ? <ChatArea /> : <NoChatSelected />}
-										</div>
-									</div>{' '}
+								<div className="">
+									<ChatPage />
 								</div>
 							) : (
 								<Navigate to="/welcome/login" />
 							)
 						}
-					/> */}
+					/>
 					{/* 
 					<Route
 						path="/allchats/:id"

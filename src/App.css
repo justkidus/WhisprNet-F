@@ -173,3 +173,36 @@
 		--sidebar-ring: 217.2 91.2% 59.8%;
 	}
 }
+
+/* @media (max-width: 768px) {
+	.sidebar-container {
+		width: 100%;
+	}
+
+	.chat-container {
+		display: none;
+	}
+
+	.chat-page {
+		width: 100%;
+	}
+} */
+
+/* @media (max-width: 768px) {
+	.chat-container {
+		display: none !important;
+	}
+	.sidebar-container {
+		display: block;
+		width: 100vw;
+		height: 100vh;
+	}
+} */
+@media (max-width: 768px) {
+	.chat-container {
+		display: none;
+	}
+	.chat-page {
+		width: 100%;
+	}
+}

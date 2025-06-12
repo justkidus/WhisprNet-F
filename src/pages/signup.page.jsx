@@ -125,7 +125,8 @@ const Signup = () => {
 					)}
 				</button>
 				<p className="pt-[15px] pl-[15px] text-black">
-					I already have an account ? <Link to="/welcome/login">Login</Link>
+					I already have an account ?{' '}
+					<button onClick={nav('/welcome/login')}>Login</button>
 				</p>
 				<div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
 

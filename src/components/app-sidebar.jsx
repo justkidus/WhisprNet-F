@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Command } from 'lucide-react';
 import { IoMdSettings } from 'react-icons/io';
 import { IoMdChatboxes } from 'react-icons/io';
@@ -28,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 // This is sample data
 import Page from '@/dashboard/page';
 import avatar from '@/assets/react.svg';
+
 const data = {
 	// user: {
 	// 	name: 'shadcn',
@@ -150,155 +151,200 @@ const data = {
 	],
 };
 export function AppSidebar({ ...props }) {
+	const [isMobile, setIsMobile] = useState(false);
+	useEffect(() => {
+		const handleResize = () => setIsMobile(window.innerWidth < 768);
+		handleResize(); // Initial check
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 	// Note: I'm using state to show active item.
 	// IRL you should use the url/router.
+	const navigate = useNavigate();
 	const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
 	// const [mails, setMails] = React.useState(data.mails);
 	const { setOpen } = useSidebar();
+
 	const { getUsers, users, setSelectedUser, selectedUser, isUserLoading } =
 		useChatstore();
 	useEffect(() => {
 		getUsers();
 	}, [getUsers]);
-	const { onlineUsers } = useAuthStore();
+	const { onLineUsers } = useAuthStore();
 	console.log('users : ', users);
 	const nav = useNavigate();
 
 	const handleSelectedUser = (user) => {
 		setSelectedUser(user);
-		// nav(`/allchats/${user._id}`);
+		nav(`/allchats/${user._id}`);
 	};
 	console.log(selectedUser);
-	return (
-		<Sidebar
-			collapsible="icon"
-			className="overflow-hidden *:data-[sidebar=sidebar]:flex-row"
-			{...props}
-		>
-			{/* This is the first sidebar */}
-			{/* We disable collapsible and adjust width to icon. */}
-			{/* This will make the sidebar appear as icons. */}
-			<Sidebar
-				collapsible="none"
-				className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r"
-			>
-				<SidebarHeader>
-					<SidebarMenu>
-						<SidebarMenuItem>
-							<SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
-								<a href="#">
-									<div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-										<Command className="size-4" />
-									</div>
-									<div className="grid flex-1 text-left text-sm leading-tight">
-										<span className="truncate font-medium">Acme Inc</span>
-										<span className="truncate text-xs">Enterprise</span>
-									</div>
-								</a>
-							</SidebarMenuButton>
-						</SidebarMenuItem>
-					</SidebarMenu>
-				</SidebarHeader>
-				<SidebarContent>
-					<SidebarGroup>
-						<SidebarGroupContent className="px-1.5 md:px-0">
-							<SidebarMenu>
-								{data.navMain.map((item) => (
-									<SidebarMenuItem key={item.title}>
-										<SidebarMenuButton
-											tooltip={{
-												children: item.title,
-												hidden: false,
-											}}
-											onClick={() => {
-												setActiveItem(item);
-												const mail = data.mails.sort(() => Math.random() - 0.5);
-												setMails(
-													mail.slice(
-														0,
-														Math.max(5, Math.floor(Math.random() * 10) + 1)
-													)
-												);
-												setOpen(true);
-											}}
-											isActive={activeItem?.title === item.title}
-											className="px-2.5 md:px-2"
-										>
-											<item.icon />
-											<span>{item.title}</span>
-										</SidebarMenuButton>
-									</SidebarMenuItem>
-								))}
-							</SidebarMenu>
-						</SidebarGroupContent>
-					</SidebarGroup>
-				</SidebarContent>
-				<SidebarFooter>
-					<NavUser />
-				</SidebarFooter>
-			</Sidebar>
-			{/* This is the second sidebar */}
-			{/* We disable collapsible and let it fill remaining space */}
-			<Sidebar collapsible="none" className="hidden flex-1 md:flex">
-				<SidebarHeader className="gap-3.5 border-b p-4">
-					<div className="flex w-full items-center justify-between">
-						<div className="text-foreground text-base font-medium">
-							{activeItem?.title}
+	if (isMobile) {
+		return (
+			<div className="p-4 w-full h-full">
+				<h2 className="text-lg font-semibold mb-4">Chats</h2>
+				<div className="overflow-y-auto max-h-screen">
+					{users.map((user) => (
+						<div
+							key={user._id}
+							onClick={() => handleSelectedUser(user)}
+							className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
+						>
+							<div className="relative ">
+								<img
+									src={user.profilePic || react}
+									alt={user.fullName}
+									className="w-10 h-10 rounded-full"
+								/>
+								{onLineUsers.includes(user._id) && (
+									<div className="absolute bottom-0 right-0 w-3 h-3 bg-white rounded-full border-2 border-white" />
+								)}
+							</div>
+							<div>{user.fullName}</div>
 						</div>
-						<Label className="flex items-center gap-2 text-sm">
-							<span>Unreads</span>
-							<Switch className="shadow-none" />
-						</Label>
-					</div>
-					<SidebarInput placeholder="Type to search..." />
-				</SidebarHeader>
-				<SidebarContent>
-					<SidebarGroup className="px-0">
-						<SidebarGroupContent>
-							{users.map((user) => (
-								<a
-									onClick={() => handleSelectedUser(user)}
-									key={user.id}
-									className={`hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex-col border-b text-sm leading-tight whitespace-nowrap last:border-b-0 w-full p-3 flex items-center gap-3
-               transition-colors
-              ${
-								selectedUser?._id === user._id
-									? 'bg-base-300 ring-1 ring-base-300'
-									: ''
-							}`}
-								>
-									<div className="flex w-full items-center gap-2">
-										<div className="">
+					))}
+				</div>
+			</div>
+		);
+	}
+	return (
+		<>
+			<Sidebar
+				collapsible="icon"
+				className="overflow-hidden *:data-[sidebar=sidebar]:flex-row"
+				{...props}
+			>
+				{/* This is the first sidebar */}
+				{/* We disable collapsible and adjust width to icon. */}
+				{/* This will make the sidebar appear as icons. */}
+				<Sidebar
+					collapsible="none"
+					className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r"
+				>
+					<SidebarHeader>
+						<SidebarMenu>
+							<SidebarMenuItem>
+								<SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
+									<a href="#">
+										<div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+											<Command className="size-4" />
+										</div>
+										<div className="grid flex-1 text-left text-sm leading-tight">
+											<span className="truncate font-medium">Acme Inc</span>
+											<span className="truncate text-xs">Enterprise</span>
+										</div>
+									</a>
+								</SidebarMenuButton>
+							</SidebarMenuItem>
+						</SidebarMenu>
+					</SidebarHeader>
+					<SidebarContent>
+						<SidebarGroup>
+							<SidebarGroupContent className="px-1.5 md:px-0">
+								<SidebarMenu>
+									{data.navMain.map((item) => (
+										<SidebarMenuItem key={item.title}>
+											<SidebarMenuButton
+												tooltip={{
+													children: item.title,
+													hidden: false,
+												}}
+												onClick={() => {
+													setActiveItem(item);
+													const mail = data.mails.sort(
+														() => Math.random() - 0.5
+													);
+													setMails(
+														mail.slice(
+															0,
+															Math.max(5, Math.floor(Math.random() * 10) + 1)
+														)
+													);
+													setOpen(true);
+												}}
+												isActive={activeItem?.title === item.title}
+												className="px-2.5 md:px-2"
+											>
+												<item.icon />
+												<span>{item.title}</span>
+											</SidebarMenuButton>
+										</SidebarMenuItem>
+									))}
+								</SidebarMenu>
+							</SidebarGroupContent>
+						</SidebarGroup>
+					</SidebarContent>
+					<SidebarFooter>
+						<NavUser />
+					</SidebarFooter>
+				</Sidebar>
+				{/* This is the second sidebar */}
+				{/* We disable collapsible and let it fill remaining space */}
+				<Sidebar collapsible="none" className="hidden flex-1 md:flex sm:flex">
+					<SidebarHeader className="gap-3.5 border-b p-4">
+						<div className="flex w-full items-center justify-between">
+							<div className="text-foreground text-base font-medium">
+								{activeItem?.title}
+							</div>
+							<Label className="flex items-center gap-2 text-sm">
+								<span>Unreads</span>
+								<Switch className="shadow-none" />
+							</Label>
+						</div>
+						<SidebarInput placeholder="Type to search..." />
+					</SidebarHeader>
+					<SidebarContent>
+						<SidebarGroup className="px-0 md-full sm- full">
+							<SidebarGroupContent>
+								{users.map((user) => (
+									// 						<div
+									// 							onClick={() => handleSelectedUser(user)}
+									// 							key={user._id}
+									// 							className={`hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex-col border-b text-sm leading-tight whitespace-nowrap last:border-b-0 w-full p-3 flex items-center gap-3
+									//    transition-colors
+									//   ${
+									// 					selectedUser?._id === user._id
+									// 						? 'bg-base-300 ring-1 ring-base-300'
+									// 						: ''
+									// 				}`}
+									// 						>
+									<div
+										key={user._id}
+										onClick={() => handleSelectedUser(user)}
+										className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
+									>
+										<div className="relative ">
 											<img
 												src={user.profilePic || react}
-												alt="avatar"
-												className="w-[60px] h-[50px]"
+												alt={user.fullName}
+												className="w-10 h-10 rounded-full"
 											/>
+											{onLineUsers.includes(user._id) && (
+												<div className="absolute bottom-0 right-0 w-3 h-3 bg-black rounded-full border-2 border-white" />
+											)}
 										</div>
-										<div>
-											{user.fullName}
-											{/* <div>
-												{onlineUsers?.includes(user._id) && (
-													<span className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2" />
-												)}
-											</div> */}
-										</div>{' '}
+										<div>{user.fullName}</div>
 									</div>
-									{/*{data.mails.map((mail) => (
+								))}
+								{/* <Page selectedUser={selectedUser} /> */}
+							</SidebarGroupContent>
+						</SidebarGroup>
+					</SidebarContent>
+				</Sidebar>
+			</Sidebar>
+		</>
+	);
+}
+{
+	/*{data.mails.map((mail) => (
 										<>
-											 <span className="font-medium">{mail.subject}</span> */}
-									{/* <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
+											 <span className="font-medium">{mail.subject}</span> */
+}
+{
+	/* <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
 												{mail.teaser}
 											</span> 
 										</>
-									))}*/}
-								</a>
-							))}
-							{/* <Page selectedUser={selectedUser} /> */}
-						</SidebarGroupContent>
-					</SidebarGroup>
-				</SidebarContent>
-			</Sidebar>
-		</Sidebar>
-	);
+									))}*/
 }
+// </div>
