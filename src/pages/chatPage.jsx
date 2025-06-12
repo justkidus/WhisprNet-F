@@ -31,7 +31,7 @@ const ChatPage = () => {
 
 	return (
 		<div className="flex flex-col h-screen w-screen">
-			<header className="sticky top-0 flex items-center gap-2 border-b bg-background bg-white p-4">
+			<header className="sticky top-0 flex items-center gap-2 border-b bg-background p-4 h-[20px] w-full">
 				<button
 					onClick={() => navigate(-1)}
 					className="p-2 hover:bg-gray-100 rounded-full"
@@ -56,7 +56,7 @@ const ChatPage = () => {
 					</div>
 				</div>
 			</header>
-			kkkkkkkk
+
 			<main className="flex-1 overflow-y-auto mt-[20px]">
 				{' '}
 				<ChatContainer />{' '}
