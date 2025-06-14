@@ -73,7 +73,7 @@ function App() {
 									<ChatPage />
 								</div>
 							) : (
-								<Navigate to="/welcome/login" />
+								<Navigate to="/welcome/signup" />
 							)
 						}
 					/>
@@ -112,7 +112,7 @@ function App() {
 									<Page />
 								</div>
 							) : (
-								<Navigate to="/welcome/login" />
+								<Navigate to="/welcome/signup" />
 							)
 						}
 					/>
@@ -127,7 +127,7 @@ function App() {
 									<Page />
 								</div>
 							) : (
-								<Navigate to="/welcome/login" />
+								<Navigate to="/welcome/signup" />
 							)
 						}
 					/>
@@ -139,7 +139,7 @@ function App() {
 									<ChatPage />
 								</div>
 							) : (
-								<Navigate to="/welcome/login" />
+								<Navigate to="/welcome/signup" />
 							)
 						}
 					/>
