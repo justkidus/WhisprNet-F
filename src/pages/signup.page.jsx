@@ -124,13 +124,15 @@ const Signup = () => {
 						</>
 					)}
 				</button>
-				<p className="pt-[15px] pl-[15px] text-black">
-					I already have an account ?{' '}
-					<button onClick={() => nav('/welcome/login')}>Login</button>
-				</p>
-				<div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
+			</form>
 
-				{/* <div className="flex flex-col space-y-4">
+			<p className="pt-[15px] pl-[15px] text-black">
+				I already have an account ?{' '}
+				<button onClick={() => nav('/welcome/login')}>Login</button>
+			</p>
+			<div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
+
+			{/* <div className="flex flex-col space-y-4">
 					<button
 						className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
 						type="text"
@@ -152,7 +154,6 @@ const Signup = () => {
 						<BottomGradient />
 					</button>
 				</div> */}
-			</form>
 		</div>
 	);
 };
