@@ -113,7 +113,7 @@ const Signup = () => {
 							<div className="flex justify-center gap-[20px]">
 								<Loader2 className="size-5 animate-spin" />
 								<span>Loading</span>
-								authUser
+								{/* authUser */}
 								{/* <>{nav('/')}</> */}
 							</div>
 						</>
