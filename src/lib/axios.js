@@ -5,8 +5,8 @@ const axiosInstance = axios.create({
 	// 	'http://localhost:8001/api',
 	// 	'https://whisprnet-b.onrender.com/api',
 	// ],
-	// baseURL: 'https://whisprnet-b.onrender.com/api',
-	baseURL: 'http://localhost:8001/api',
+	baseURL: 'https://whisprnet-b.onrender.com/api',
+	// baseURL: 'http://localhost:8001/api',
 
 	withCredentials: true,
 });
