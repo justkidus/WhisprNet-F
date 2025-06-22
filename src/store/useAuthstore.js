@@ -96,4 +96,17 @@ export const useAuthStore = create((set, get) => ({
 	disconnectSocket: () => {
 		if (get().socket?.connected) get().socket.disconnect();
 	},
+	joinGroup: (groupId) => {
+		const socket = get().socket;
+		if (socket && socket.connected) {
+			socket.emit('joinRoom', groupId);
+		}
+	},
+
+	leaveGroup: (groupId) => {
+		const socket = get().socket;
+		if (socket && socket.connected) {
+			socket.emit('leaveRoom', groupId);
+		}
+	},
 }));

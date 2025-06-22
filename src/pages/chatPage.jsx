@@ -6,6 +6,12 @@ import ChatContainer from '@/dashboard/ChatContainer';
 import MessageInput from '@/dashboard/MessageInput';
 import { ArrowLeft } from 'lucide-react';
 import react from '../assets/react.svg';
+import {
+	SidebarProvider,
+	SidebarTrigger,
+	SidebarInset,
+} from '@/components/ui/sidebar';
+import { Separator } from '@/components/ui/separator';
 const ChatPage = () => {
 	const { userId } = useParams();
 	const navigate = useNavigate();
@@ -30,8 +36,13 @@ const ChatPage = () => {
 	}
 
 	return (
-		<div className="flex flex-col h-screen w-screen bg-white">
-			<header className="sticky top-0 flex items-center gap-2 border-b bg-background p-4 h-[50px] w-full">
+		<SidebarProvider
+			style={{
+				'--sidebar-width': 'w-full',
+			}}
+		>
+			<div className="flex flex-col h-screen w-screen bg-white">
+				{/* <header className="sticky top-0 flex items-center gap-2 border-b bg-background p-4 h-[50px] w-full">
 				<button
 					onClick={() => navigate(-1)}
 					className="p-2 hover:bg-gray-100 rounded-full"
@@ -55,16 +66,25 @@ const ChatPage = () => {
 						</p>
 					</div>
 				</div>
-			</header>
-
-			<main className="flex-1 overflow-y-auto mt-[20px]">
-				{' '}
-				<ChatContainer />{' '}
-			</main>
-			<footer className=" flex border-t p-4 max-h-[10vh]">
-				<MessageInput />
-			</footer>
-		</div>
+			</header> */}
+				<header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+					<button
+						onClick={() => navigate(-1)}
+						className="p-2 hover:bg-gray-100 rounded-full"
+					>
+						<ArrowLeft className="h-5 w-5" />
+					</button>
+					<h1 className="font-medium">{selectedUser.fullName}</h1>
+				</header>
+				<main className="flex-1 overflow-y-auto mt-[20px]">
+					{' '}
+					<ChatContainer />{' '}
+				</main>
+				<footer className=" flex border-t p-4 max-h-[10vh]">
+					<MessageInput />
+				</footer>
+			</div>
+		</SidebarProvider>
 	);
 };
 

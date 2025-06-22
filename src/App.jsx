@@ -17,13 +17,20 @@ import { useChatstore } from './store/useChatstore';
 import LogoutPage from './pages/logout';
 import Page from './dashboard/page';
 import ChatPage from './pages/chatPage';
+import GroupPage from './dashboard/GroupPage';
+import CreateGroup from './dashboard/createGroup';
 function App() {
 	const { selectedUser } = useChatstore();
 	const location = useLocation();
 	const { theme } = useThemeStore();
 	const { checkAuth, authUser, isCheckingAuth, onlineUsers } = useAuthStore();
 
-	const hideNavbarRoutes = ['/', '/allchats', '/users', '/allchats/:id'];
+	const hideNavbarRoutes = [
+		'/allchats',
+		'/users',
+		'/allchats/:id',
+		'/group/:id',
+	];
 	const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
 	console.log({ onlineUsers });
@@ -44,7 +51,7 @@ function App() {
 			data-theme={theme}
 			className="min-h-screen max-h-screen overflow-y-hidden"
 		>
-			{!shouldHideNavbar && <Navbar />}
+			{shouldHideNavbar && <Navbar />}
 
 			<div className="">
 				<Routes>
@@ -54,14 +61,6 @@ function App() {
 					/>
 					<Route path="/setting" element={<Setting />} />
 					<Route path="/welcome/login" element={<Login />} />
-					{/* <Route
-						path="/welcome/signup"
-						element={
-							<div className="" data-theme={theme}>
-								<Signup />
-							</div>
-						}
-					/> */}
 					<Route
 						path="/chat/:userId"
 						element={
@@ -70,7 +69,7 @@ function App() {
 									className="bg-base-100 text-base-content rounded-lg"
 									data-theme={theme}
 								>
-									<ChatPage />
+									<Page />
 								</div>
 							) : (
 								<Navigate to="/welcome/signup" />
@@ -85,7 +84,6 @@ function App() {
 							</div>
 						}
 					/>
-
 					<Route
 						path="/"
 						element={
@@ -136,36 +134,28 @@ function App() {
 						element={
 							authUser ? (
 								<div className="">
-									<ChatPage />
+									<Page />
 								</div>
 							) : (
 								<Navigate to="/welcome/signup" />
 							)
 						}
 					/>
-					{/* 
+
 					<Route
-						path="/allchats/:id"
+						path="/groups/:id"
 						element={
 							authUser ? (
-								<div
-									className="bg-base-100 text-base-content rounded-lg p-4"
-									data-theme={theme}
-								>
-									<Layout>
-										<Layout2>
-											<Layout3>
-												<ChatArea />
-											</Layout3>
-										</Layout2>
-									</Layout>
+								<div className="">
+									<GroupPage />
 								</div>
 							) : (
-								<Navigate to="/login" />
+								<Navigate to="/welcome/signup" />
 							)
 						}
-					/> */}
+					/>
 					<Route path="/logout" element={<LogoutPage />} />
+					<Route path="/createGroup" element={<CreateGroup />} />
 				</Routes>
 			</div>
 			<Toaster />

@@ -117,6 +117,11 @@ export default function Page() {
 					<AppSidebar />
 				) : (
 					<>
+						<header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+							<SidebarTrigger className="-ml-1" />
+							<Separator orientation="vertical" className="mr-2 h-4" />
+							<h1 className="font-medium">{selectedUser.fullName}</h1>
+						</header>
 						<main className="h-[80vh]">
 							<ChatContainer />
 						</main>

@@ -23,6 +23,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { useChatstore } from '@/store/useChatstore';
 import { useAuthStore } from '@/store/useAuthstore';
+import { useGroupChatStore } from '@/store/useGroupChatStore';
 import react from '../assets/react.svg';
 import { useNavigate } from 'react-router-dom';
 // This is sample data
@@ -167,6 +168,12 @@ export function AppSidebar({ ...props }) {
 
 	const { getUsers, users, setSelectedUser, selectedUser, isUserLoading } =
 		useChatstore();
+	const { groups, Allgroups, setSelectedGroup, selectedGroup, isGroupLoading } =
+		useGroupChatStore();
+	useEffect(() => {
+		Allgroups();
+	}, [Allgroups]);
+	console.log('groups :', groups);
 	useEffect(() => {
 		getUsers();
 	}, [getUsers]);
@@ -178,6 +185,10 @@ export function AppSidebar({ ...props }) {
 		setSelectedUser(user);
 		nav(`/allchats/${user._id}`);
 	};
+	const handleSelectedGroup = (group) => {
+		setSelectedGroup(group);
+		nav(`/groups/${group._id}`);
+	};
 	console.log(selectedUser);
 	if (isMobile) {
 		return (
@@ -187,7 +198,7 @@ export function AppSidebar({ ...props }) {
 					{users.map((user) => (
 						<div
 							key={user._id}
-							onClick={() => handleSelectedUser(user)}
+							onClick={() => handleSelectedGroup(user)}
 							className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
 						>
 							<div className="relative ">
@@ -254,12 +265,12 @@ export function AppSidebar({ ...props }) {
 													const mail = data.mails.sort(
 														() => Math.random() - 0.5
 													);
-													setMails(
-														mail.slice(
-															0,
-															Math.max(5, Math.floor(Math.random() * 10) + 1)
-														)
-													);
+													// setMails(
+													// 	mail.slice(
+													// 		0,
+													// 		Math.max(5, Math.floor(Math.random() * 10) + 1)
+													// 	)
+													// );
 													setOpen(true);
 												}}
 												isActive={activeItem?.title === item.title}
@@ -291,60 +302,103 @@ export function AppSidebar({ ...props }) {
 								<Switch className="shadow-none" />
 							</Label>
 						</div>
-						<SidebarInput placeholder="Type to search..." />
+						<SidebarInput placeholder="Type to search..." />{' '}
 					</SidebarHeader>
 					<SidebarContent>
-						<SidebarGroup className="px-0 md-full sm- full">
-							<SidebarGroupContent>
+						{/* allchat's */}
+						{activeItem?.title === 'AllChats' && (
+							<>
 								{users.map((user) => (
-									// 						<div
-									// 							onClick={() => handleSelectedUser(user)}
-									// 							key={user._id}
-									// 							className={`hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex-col border-b text-sm leading-tight whitespace-nowrap last:border-b-0 w-full p-3 flex items-center gap-3
-									//    transition-colors
-									//   ${
-									// 					selectedUser?._id === user._id
-									// 						? 'bg-base-300 ring-1 ring-base-300'
-									// 						: ''
-									// 				}`}
-									// 						>
 									<div
 										key={user._id}
 										onClick={() => handleSelectedUser(user)}
 										className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
 									>
-										<div className="relative ">
+										<div className="relative">
 											<img
 												src={user.profilePic || react}
 												alt={user.fullName}
 												className="w-10 h-10 rounded-full"
 											/>
 											{onLineUsers.includes(user._id) && (
-												<div className="absolute bottom-0 right-0 w-3 h-3 bg-black rounded-full border-2 border-white" />
+												<div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
 											)}
 										</div>
 										<div>{user.fullName}</div>
 									</div>
 								))}
-								{/* <Page selectedUser={selectedUser} /> */}
-							</SidebarGroupContent>
-						</SidebarGroup>
+
+								{groups.map((group) => (
+									<div
+										key={group._id}
+										onClick={() => handleSelectedGroup(group)}
+										className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
+									>
+										<div className="relative">
+											<img
+												src={group.profilePic || react}
+												alt={group.name}
+												className="w-10 h-10 rounded-full"
+											/>
+										</div>
+										<div>{group.name}</div>
+									</div>
+								))}
+							</>
+						)}
+
+						{/* user's */}
+						{activeItem?.title === 'Users' &&
+							users.map((user) => (
+								<div
+									key={user._id}
+									onClick={() => handleSelectedUser(user)}
+									className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
+								>
+									<div className="relative">
+										<img
+											src={user.profilePic || react}
+											alt={user.fullName}
+											className="w-10 h-10 rounded-full"
+										/>
+										{onLineUsers.includes(user._id) && (
+											<div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
+										)}
+									</div>
+									<div>{user.fullName}</div>
+								</div>
+							))}
+						{/* group */}
+						{activeItem?.title === 'Groups' && (
+							<>
+								{groups.map((group) => (
+									<div
+										key={group._id}
+										onClick={() => handleSelectedGroup(group)}
+										className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
+									>
+										<div className="relative">
+											<img
+												src={group.profilePic || react}
+												alt={group.name}
+												className="w-10 h-10 rounded-full"
+											/>
+										</div>
+										<div>{group.name}</div>
+									</div>
+								))}
+
+								<button
+									className="mx-4 my-4 h-10 rounded bg-black text-white hover:bg-gray-800"
+									onClick={() => nav('/createGroup')}
+								>
+									Create A Group
+								</button>
+							</>
+						)}
 					</SidebarContent>
 				</Sidebar>
 			</Sidebar>
 		</>
 	);
 }
-{
-	/*{data.mails.map((mail) => (
-										<>
-											 <span className="font-medium">{mail.subject}</span> */
-}
-{
-	/* <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
-												{mail.teaser}
-											</span> 
-										</>
-									))}*/
-}
-// </div>
