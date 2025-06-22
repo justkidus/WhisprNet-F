@@ -30,7 +30,7 @@ export default function CreateGroup() {
 					<LabelInputContainer className="mb-4">
 						<Label htmlFor="GroupName">Group Name</Label>
 						<Input0
-							id="email"
+							id="GroupName"
 							placeholder="projectmayhem@fc.com"
 							type="name"
 							value={form.name}
