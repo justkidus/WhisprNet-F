@@ -18,7 +18,7 @@ import LogoutPage from './pages/logout';
 import Page from './dashboard/page';
 import ChatPage from './pages/chatPage';
 import GroupPage from './dashboard/GroupPage';
-import CreateGroup from './dashboard/createGroup';
+import CreateGroup from './dashboard/CreateGroup';
 function App() {
 	const { selectedUser } = useChatstore();
 	const location = useLocation();
