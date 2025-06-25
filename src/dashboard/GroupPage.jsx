@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { useGroupChatStore } from '@/store/useGroupChatStore';
 import GroupChatContainer from '@/dashboard/GroupChatContainer';
 import GroupMessageInput from '@/dashboard/GroupMessageInput';
-import HeaderBar from '@/components/headerBar';
+import HeaderBar from '@/components/HeaderBar';
 export default function groupPage() {
 	const [isMobile, setIsMobile] = useState(false);
 	const { groups, Allgroups, setSelectedGroup, selectedGroup, isGroupLoading } =
