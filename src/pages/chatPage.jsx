@@ -80,9 +80,9 @@ const ChatPage = () => {
 					{' '}
 					<ChatContainer />{' '}
 				</main>
-				<footer className=" flex border-t p-4 max-h-[10vh]">
+				{/* <footer className=" flex border-t p-4 max-h-[10vh]">
 					<MessageInput />
-				</footer>
+				</footer> */}
 			</div>
 		</SidebarProvider>
 	);

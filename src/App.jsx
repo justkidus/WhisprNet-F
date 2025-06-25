@@ -61,7 +61,7 @@ function App() {
 					/>
 					<Route path="/setting" element={<Setting />} />
 					<Route path="/welcome/login" element={<Login />} />
-					<Route
+					{/* <Route
 						path="/chat/:userId"
 						element={
 							authUser ? (
@@ -75,7 +75,7 @@ function App() {
 								<Navigate to="/welcome/signup" />
 							)
 						}
-					/>
+					/> */}
 					<Route
 						path="/welcome/signup"
 						element={
@@ -99,7 +99,7 @@ function App() {
 							)
 						}
 					/>
-					<Route
+					{/* <Route
 						path="/allchats"
 						element={
 							authUser ? (
@@ -113,8 +113,8 @@ function App() {
 								<Navigate to="/welcome/signup" />
 							)
 						}
-					/>
-					<Route
+					/> */}
+					{/* <Route
 						path="/users"
 						element={
 							authUser ? (
@@ -128,7 +128,7 @@ function App() {
 								<Navigate to="/welcome/signup" />
 							)
 						}
-					/>
+					/> */}
 					<Route
 						path="/allchats/:id"
 						element={

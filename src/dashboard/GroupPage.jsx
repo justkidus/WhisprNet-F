@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { useGroupChatStore } from '@/store/useGroupChatStore';
 import GroupChatContainer from '@/dashboard/GroupChatContainer';
 import GroupMessageInput from '@/dashboard/GroupMessageInput';
+import HeaderBar from '@/components/headerBar';
 export default function groupPage() {
 	const [isMobile, setIsMobile] = useState(false);
 	const { groups, Allgroups, setSelectedGroup, selectedGroup, isGroupLoading } =
@@ -31,20 +32,21 @@ export default function groupPage() {
 			{isMobile ? (
 				// Mobile View
 				!selectedGroup ? (
-					<AppSidebar />
+					// <AppSidebar />
+					<HeaderBar />
 				) : (
 					<>
-						<header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
-							<SidebarTrigger className="-ml-1" />
-							<Separator orientation="vertical" className="mr-2 h-4" />
-							<h1 className="font-medium">{selectedGroup.name}</h1>
-						</header>
-						<main className="h-[80vh]">
-							<GroupChatContainer />
-						</main>
-						<footer className="border-2">
-							<GroupMessageInput />
-						</footer>
+						<div className="flex flex-col w-full">
+							<header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+								<h1 className="font-medium">{selectedGroup.name}</h1>
+							</header>
+							<main className="h-[80vh]">
+								<GroupChatContainer />
+							</main>
+							<footer className="border-2">
+								<GroupMessageInput />
+							</footer>
+						</div>
 					</>
 				)
 			) : (
