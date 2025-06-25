@@ -181,32 +181,10 @@ const HeaderBar = () => {
 								</>
 							)}
 						</SidebarContent>
-						{/* <h2 className="text-lg font-semibold mb-4">Chats</h2>
-						<div className="overflow-y-auto max-h-screen">
-							{users.map((user) => (
-								<div
-									key={user._id}
-									onClick={() => handleSelectedGroup(user)}
-									className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
-								>
-									<div className="relative ">
-										<img
-											src={user.profilePic || react}
-											alt={user.fullName}
-											className="w-10 h-10 rounded-full"
-										/>
-										{onLineUsers.includes(user._id) && (
-											<div className="absolute bottom-0 right-0 w-3 h-3 bg-black rounded-full border-2 border-white" />
-										)}
-									</div>
-									<div>{user.fullName}</div>
-								</div>
-							))} */}
 					</div>
 				</div>
 			</>
 		);
 	}
 };
-
 export default HeaderBar;

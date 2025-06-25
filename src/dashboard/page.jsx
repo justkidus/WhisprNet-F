@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { useChatstore } from '@/store/useChatstore';
 import ChatContainer from './ChatContainer';
 import MessageInput from './MessageInput';
-import HeaderBar from '@/components/headerBar';
+import HeaderBar from '../components/HeaderBar';
 
 export default function Page() {
 	const [isMobile, setIsMobile] = useState(false);
