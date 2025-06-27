@@ -53,7 +53,7 @@ const GroupMessageInput = () => {
 	return (
 		<div className="w-full">
 			{imagePreview && (
-				<div className="mb-3 flex items-center gap-2">
+				<div className="mb-[-30px] flex items-center gap-2">
 					<div className="relative">
 						<img
 							src={imagePreview}

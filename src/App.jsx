@@ -19,6 +19,8 @@ import Page from './dashboard/page';
 import ChatPage from './pages/chatPage';
 import GroupPage from './dashboard/GroupPage';
 import CreateGroup from './dashboard/CreateGroup';
+import ProfilePage from './pages/updateProfile';
+import Theme from './pages/theme.page';
 function App() {
 	const { selectedUser } = useChatstore();
 	const location = useLocation();
@@ -61,21 +63,6 @@ function App() {
 					/>
 					<Route path="/setting" element={<Setting />} />
 					<Route path="/welcome/login" element={<Login />} />
-					{/* <Route
-						path="/chat/:userId"
-						element={
-							authUser ? (
-								<div
-									className="bg-base-100 text-base-content rounded-lg"
-									data-theme={theme}
-								>
-									<Page />
-								</div>
-							) : (
-								<Navigate to="/welcome/signup" />
-							)
-						}
-					/> */}
 					<Route
 						path="/welcome/signup"
 						element={
@@ -99,36 +86,6 @@ function App() {
 							)
 						}
 					/>
-					{/* <Route
-						path="/allchats"
-						element={
-							authUser ? (
-								<div
-									className="bg-base-100 text-base-content rounded-lg"
-									data-theme={theme}
-								>
-									<Page />
-								</div>
-							) : (
-								<Navigate to="/welcome/signup" />
-							)
-						}
-					/> */}
-					{/* <Route
-						path="/users"
-						element={
-							authUser ? (
-								<div
-									className="bg-base-100 text-base-content rounded-lg"
-									data-theme={theme}
-								>
-									<Page />
-								</div>
-							) : (
-								<Navigate to="/welcome/signup" />
-							)
-						}
-					/> */}
 					<Route
 						path="/allchats/:id"
 						element={
@@ -156,6 +113,8 @@ function App() {
 					/>
 					<Route path="/logout" element={<LogoutPage />} />
 					<Route path="/createGroup" element={<CreateGroup />} />
+					<Route path="/profile" element={<ProfilePage />} />
+					<Route path="/theme" element={<Theme />} />
 				</Routes>
 			</div>
 			<Toaster />

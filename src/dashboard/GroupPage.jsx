@@ -12,7 +12,10 @@ import { useGroupChatStore } from '@/store/useGroupChatStore';
 import GroupChatContainer from '@/dashboard/GroupChatContainer';
 import GroupMessageInput from '@/dashboard/GroupMessageInput';
 import HeaderBar from '@/components/HeaderBar';
-export default function groupPage() {
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+
+export default function GroupPage() {
 	const [isMobile, setIsMobile] = useState(false);
 	const { groups, Allgroups, setSelectedGroup, selectedGroup, isGroupLoading } =
 		useGroupChatStore();
@@ -23,6 +26,7 @@ export default function groupPage() {
 		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
+	const navigate = useNavigate();
 	return (
 		<SidebarProvider
 			style={{
@@ -36,11 +40,17 @@ export default function groupPage() {
 					<HeaderBar />
 				) : (
 					<>
-						<div className="flex flex-col w-full">
+						<div className="flex flex-col w-full h-screen">
 							<header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+								<button
+									onClick={() => navigate(-1)}
+									className="p-2 hover:bg-gray-100 rounded-full"
+								>
+									<ArrowLeft className="h-5 w-5" />
+								</button>
 								<h1 className="font-medium">{selectedGroup.name}</h1>
 							</header>
-							<main className="h-[80vh]">
+							<main className="flex-1 overflow-y-auto">
 								<GroupChatContainer />
 							</main>
 							<footer className="border-2">
@@ -59,7 +69,7 @@ export default function groupPage() {
 								<header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
 									<SidebarTrigger className="-ml-1" />
 									<Separator orientation="vertical" className="mr-2 h-4" />
-									<h1 className="font-medium">{selectedGroup.fullName}</h1>
+									<h1 className="font-medium">{selectedGroup.name}</h1>
 								</header>
 								<main className="h-[80vh]">
 									<GroupChatContainer />

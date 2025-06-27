@@ -3,7 +3,7 @@ import { Command } from 'lucide-react';
 import { IoMdSettings } from 'react-icons/io';
 import { IoMdChatboxes } from 'react-icons/io';
 import { FaUser } from 'react-icons/fa';
-import { MdGroups3 } from 'react-icons/md';
+import { MdAccountCircle, MdGroups3 } from 'react-icons/md';
 import { GrChannel } from 'react-icons/gr';
 import { NavUser } from '@/components/nav-user';
 import { Label } from '@/components/ui/label';
@@ -29,6 +29,22 @@ import { useNavigate } from 'react-router-dom';
 // This is sample data
 import Page from '@/dashboard/page';
 import avatar from '@/assets/react.svg';
+import ProfilePage from '@/pages/updateProfile';
+import { HiColorSwatch } from 'react-icons/hi';
+const settingF = [
+	{
+		title: 'Profile',
+		url: '/profile',
+		icon: MdAccountCircle,
+		isActive: true,
+	},
+	{
+		title: 'Theme',
+		url: '/theme',
+		icon: HiColorSwatch,
+		isActive: true,
+	},
+];
 
 const data = {
 	// user: {
@@ -149,9 +165,9 @@ export function AppSidebar({ ...props }) {
 												}}
 												onClick={() => {
 													setActiveItem(item);
-													const mail = data.mails.sort(
-														() => Math.random() - 0.5
-													);
+													// const mail = data.mails.sort(
+													// 	() => Math.random() - 0.5
+													// );
 													// setMails(
 													// 	mail.slice(
 													// 		0,
@@ -255,6 +271,7 @@ export function AppSidebar({ ...props }) {
 									<div>{user.fullName}</div>
 								</div>
 							))}
+
 						{/* group */}
 						{activeItem?.title === 'Groups' && (
 							<>
@@ -281,6 +298,28 @@ export function AppSidebar({ ...props }) {
 								>
 									Create A Group
 								</button>
+							</>
+						)}
+						{/* setting */}
+
+						{activeItem?.title === 'Setting' && (
+							<>
+								{settingF.map((settingf) => (
+									<div
+										key={settingf._id}
+										onClick={() => nav(settingf.url)}
+										className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
+									>
+										<div className="relative">
+											<img
+												src={settingf.icon || react}
+												alt={settingf.title}
+												className="w-10 h-10 rounded-full"
+											/>
+										</div>
+										<div>{settingf.title}</div>
+									</div>
+								))}
 							</>
 						)}
 					</SidebarContent>

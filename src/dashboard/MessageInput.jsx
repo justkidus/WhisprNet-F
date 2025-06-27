@@ -51,9 +51,9 @@ const MessageInput = () => {
 		autoResize();
 	}, [text]);
 	return (
-		<div className="w-full">
+		<>
 			{imagePreview && (
-				<div className="mb-3 flex items-center gap-2">
+				<div className="mb-[-30px] flex items-center gap-2">
 					<div className="relative">
 						<img
 							src={imagePreview}
@@ -70,42 +70,47 @@ const MessageInput = () => {
 					</div>
 				</div>
 			)}
-			<form onSubmit={handleSendMessage} className="flex items-center">
-				<div className="flex-1 flex gap-2">
-					<textarea
-						ref={textAreaRef}
-						className="w-full textarea textarea-bordered rounded-lg textarea-sm sm:textarea-md break-words max-w-[auto] max-h-[9vh] outline-0"
-						placeholder="Type a message..."
-						value={text}
-						onChange={(e) => setText(e.target.value)}
-					/>
-					<input
-						type="file"
-						accept="image/*"
-						className="hidden"
-						ref={fileInputRef}
-						onChange={handleImageChange}
-					/>
-					<button
-						type="button"
-						className={`hidden sm:flex btn btn-circle ${
-							imagePreview ? 'text-emerald-500' : 'text-zinc-400'
-						}`}
-						onClick={() => fileInputRef.current?.click()}
-					>
-						{' '}
-						<Image size={24} />{' '}
-					</button>
-					<button
-						type="submit"
-						className="btn btn-sm btn-circle"
-						disabled={!text.trim() && !imagePreview}
-					>
-						<Send size={22} />
-					</button>
-				</div>
-			</form>
-		</div>
+			<div className="w-full">
+				<form
+					onSubmit={handleSendMessage}
+					className="flex items-center w-full absolute"
+				>
+					<div className="flex-1 flex gap-2">
+						<textarea
+							ref={textAreaRef}
+							className="w-full textarea textarea-bordered rounded-lg textarea-sm sm:textarea-md break-words max-w-[auto] max-h-[9vh] outline-0"
+							placeholder="Type a message..."
+							value={text}
+							onChange={(e) => setText(e.target.value)}
+						/>
+						<input
+							type="file"
+							accept="image/*"
+							className="hidden"
+							ref={fileInputRef}
+							onChange={handleImageChange}
+						/>
+						<button
+							type="button"
+							className={` sm:flex btn btn-circle ${
+								imagePreview ? 'text-emerald-500' : 'text-zinc-400'
+							}`}
+							onClick={() => fileInputRef.current?.click()}
+						>
+							{' '}
+							<Image size={24} />{' '}
+						</button>
+						<button
+							type="submit"
+							className="btn btn-sm btn-circle"
+							disabled={!text.trim() && !imagePreview}
+						>
+							<Send size={22} />
+						</button>
+					</div>
+				</form>
+			</div>
+		</>
 	);
 };
 

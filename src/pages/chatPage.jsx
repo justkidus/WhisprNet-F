@@ -34,14 +34,13 @@ const ChatPage = () => {
 	if (!selectedUser) {
 		return <div>Loading...</div>;
 	}
-
 	return (
 		<SidebarProvider
 			style={{
 				'--sidebar-width': 'w-full',
 			}}
 		>
-			<div className="flex flex-col h-screen w-screen bg-white">
+			<div className="flex flex-col h-screen w-full bg-white">
 				{/* <header className="sticky top-0 flex items-center gap-2 border-b bg-background p-4 h-[50px] w-full">
 				<button
 					onClick={() => navigate(-1)}
@@ -80,9 +79,9 @@ const ChatPage = () => {
 					{' '}
 					<ChatContainer />{' '}
 				</main>
-				{/* <footer className=" flex border-t p-4 max-h-[10vh]">
+				<footer className=" flex border-t p-4 max-h-[10vh]">
 					<MessageInput />
-				</footer> */}
+				</footer>
 			</div>
 		</SidebarProvider>
 	);
